@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class ChatComponent {
   messageForm: FormGroup;
   messages$: Observable<Message[]>;
+  chatName!: string;
   constructor(
     private fb: FormBuilder,
     private chat: ChatService,
@@ -20,8 +21,8 @@ export class ChatComponent {
     this.messageForm = this.fb.group({
       message: [null, Validators.required],
     });
-
     this.messages$ = this.chat.getMessages();
+    this.chatName = this.chat.getChatName();
   }
 
   send() {

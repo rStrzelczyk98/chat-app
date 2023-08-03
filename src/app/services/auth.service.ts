@@ -41,7 +41,7 @@ export class AuthService {
           photoURL: user.photoURL ?? '',
           displayName: user.displayName ?? '',
         };
-        this.router.navigate(['chat']);
+        this.router.navigate(['list']);
       })
       .catch((error) => console.error(error.message));
   }

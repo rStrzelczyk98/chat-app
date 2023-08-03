@@ -1,0 +1,19 @@
+.list {
+  height: 100svh;
+}
+
+.rooms {
+  gap: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.add {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  aspect-ratio: 1/1;
+}

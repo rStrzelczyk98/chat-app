@@ -1,5 +1,5 @@
 <div class="chat d-flex flex-column">
-  <h1 class="text-center text-white bg-success bg-gradient m-0 p-1">GROUP CHAT</h1>
+  <h1 class="text-center text-uppercase text-white bg-success bg-gradient m-0 p-1">{{chatName}}</h1>
   <div class="flex-grow-1 overflow-y-auto overflow-x-hidden p-1" #chat [scrollTop]="chat.scrollHeight">
     <app-msg *ngFor="let message of messages$ | async" [url]="message.userAvatar" [username]="message.username"
       [msg]="message.msg" [time]="message.time" [id]="message.userId"></app-msg>
