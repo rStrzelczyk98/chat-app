@@ -1,0 +1,17 @@
+<div class="chat d-flex flex-column">
+  <h1 class="text-center text-white bg-success bg-gradient m-0 p-1">GROUP CHAT</h1>
+  <div class="flex-grow-1 overflow-y-auto overflow-x-hidden p-1" #chat [scrollTop]="chat.scrollHeight">
+    <app-msg *ngFor="let message of messages$ | async" [url]="message.userAvatar" [username]="message.username"
+      [msg]="message.msg" [time]="message.time" [id]="message.userId"></app-msg>
+    <div id='scroll'></div>
+  </div>
+  <form class="d-flex p-1" [formGroup]="messageForm" (ngSubmit)="send()">
+    <div class="input-group">
+      <input class="form-control bg-dark text-white-50" type="text" formControlName="message"
+        placeholder="New message...">
+      <button class="btn btn-success bg-gradient" type="submit" [disabled]="messageForm.invalid"><i
+          class="bi bi-send"></i></button>
+    </div>
+    <button class="btn btn-secondary bg-gradient rounded-2" type="button" (click)="quickMessage()">😎</button>
+  </form>
+</div>
