@@ -14,9 +14,18 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
 import { MsgComponent } from './msg/msg.component';
+import { ListComponent } from './list/list.component';
+import { RoomCardComponent } from './room-card/room-card.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ChatComponent, MsgComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    ChatComponent,
+    MsgComponent,
+    ListComponent,
+    RoomCardComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

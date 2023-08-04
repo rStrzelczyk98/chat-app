@@ -4,6 +4,7 @@ import {
   collection,
   collectionData,
   doc,
+  setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable, map, take, tap } from 'rxjs';
@@ -21,8 +22,11 @@ export interface Message {
 })
 export class ChatService {
   private messages$: Observable<any>;
+  private chatName: string = 'MESSAGES';
   constructor(private fs: Firestore) {
-    this.messages$ = collectionData(collection(this.fs, 'CHAT'));
+    this.messages$ = collectionData(collection(this.fs, 'CHAT'), {
+      idField: 'chatName',
+    });
   }
 
   sendMessage({ displayName, photoURL, uid }: User, msg: string) {
@@ -34,15 +38,15 @@ export class ChatService {
       time: Date.now(),
     };
 
-    this.messages$
+    this.getMessages()
       .pipe(
-        tap(([{ messages }]) => {
+        tap((messages) => {
           if (message.msg === 'clear') {
-            updateDoc(doc(this.fs, 'CHAT/MESSAGES'), { messages: [] });
+            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { messages: [] });
           } else {
             const arr = [...messages];
             arr.push(message);
-            updateDoc(doc(this.fs, 'CHAT/MESSAGES'), { messages: arr });
+            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { messages: arr });
           }
         }),
         take(1)
@@ -51,12 +55,34 @@ export class ChatService {
   }
 
   getMessages() {
-    return this.messages$.pipe(map(([{ messages }]) => messages)) as Observable<
-      Message[]
-    >;
+    return this.messages$.pipe(
+      map(
+        (chats) =>
+          chats.find((chat: any) => chat['chatName'] === this.chatName).messages
+      )
+      // map((messages) => messages.reverse())
+    ) as Observable<Message[]>;
   }
 
-  deleteMessages() {
-    updateDoc(doc(this.fs, 'CHAT/MESSAGES'), { messages: [] });
+  deleteMessages(chatName: string) {
+    updateDoc(doc(this.fs, `CHAT/${chatName}`), { messages: [] });
+  }
+
+  createNewChat(name: string) {
+    setDoc(doc(this.fs, `CHAT/${name}`), { messages: [] });
+  }
+
+  setChatName(name: string) {
+    this.chatName = name;
+  }
+
+  getChatName() {
+    return this.chatName;
+  }
+
+  getAllRooms() {
+    return this.messages$.pipe(
+      map((chats) => chats.map((chat: any) => chat['chatName']))
+    );
   }
 }

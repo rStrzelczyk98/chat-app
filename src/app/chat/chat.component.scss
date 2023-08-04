@@ -5,15 +5,3 @@
 .d-flex:not(.chat) {
   gap: 0.25rem;
 }
-.form-control {
-  border-color: rgba(25, 135, 84, 0.65);
-  border-right: none;
-}
-.form-control:is(:hover, :focus) {
-  border-color: #198754;
-  outline: 0;
-  box-shadow: none;
-}
-.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.25);
-}

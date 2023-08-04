@@ -1,7 +1,16 @@
 .d-flex {
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 div {
   min-height: 100svh;
+}
+
+.icon {
+  display: inline-block;
+  background-image: url("logo-google.png");
+  background-size: contain;
+  width: 1.5rem;
+  scale: 1.5;
+  aspect-ratio: 1/1;
 }
