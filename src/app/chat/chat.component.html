@@ -3,7 +3,6 @@
   <div class="flex-grow-1 overflow-y-auto overflow-x-hidden p-1" #chat [scrollTop]="chat.scrollHeight">
     <app-msg *ngFor="let message of messages$ | async" [url]="message.userAvatar" [username]="message.username"
       [msg]="message.msg" [time]="message.time" [id]="message.userId"></app-msg>
-    <div id='scroll'></div>
   </div>
   <form class="d-flex p-1" [formGroup]="messageForm" (ngSubmit)="send()">
     <div class="input-group">

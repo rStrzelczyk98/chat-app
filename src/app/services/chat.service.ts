@@ -60,6 +60,7 @@ export class ChatService {
         (chats) =>
           chats.find((chat: any) => chat['chatName'] === this.chatName).messages
       )
+      // map((messages) => messages.reverse())
     ) as Observable<Message[]>;
   }
 

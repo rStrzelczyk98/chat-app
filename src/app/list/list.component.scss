@@ -17,3 +17,9 @@
   width: 3rem;
   aspect-ratio: 1/1;
 }
+.logout {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+}

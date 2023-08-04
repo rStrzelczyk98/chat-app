@@ -1,5 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { GoogleAuthProvider, Auth, signInWithPopup } from '@angular/fire/auth';
+import {
+  GoogleAuthProvider,
+  Auth,
+  signInWithPopup,
+  signOut,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 export interface User {
@@ -43,6 +48,12 @@ export class AuthService {
         };
         this.router.navigate(['list']);
       })
+      .catch((error) => console.error(error.message));
+  }
+
+  logout() {
+    signOut(this.auth)
+      .then(() => this.router.navigate(['']))
       .catch((error) => console.error(error.message));
   }
 

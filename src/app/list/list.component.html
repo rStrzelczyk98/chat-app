@@ -1,6 +1,9 @@
 <div class="list d-flex flex-column">
-  <h1 class="text-center text-uppercase text-white bg-success bg-gradient m-0 p-1">Chat rooms</h1>
-  <form [formGroup]="roomForm" (ngSubmit)="createRoom()" class="input-group p-1" [ngClass]="show ? '' : 'hidden' ">
+  <div class="position-relative bg-success bg-gradient p-2">
+    <h1 class="text-center text-uppercase text-white m-0">Chat rooms</h1>
+    <button class="logout btn btn-dark bg-gradient" (click)="logOut()">Logout</button>
+  </div>
+  <form [formGroup]="roomForm" (ngSubmit)="createRoom()" class="input-group p-2 pb-0" [ngClass]="show ? '' : 'hidden' ">
     <input formControlName="roomName" class="form-control bg-transparent text-white-50" type="text"
       placeholder="Chat room name">
     <button class="btn btn-success bg-gradient" type="submit" [disabled]="roomForm.invalid">Create Room</button>
