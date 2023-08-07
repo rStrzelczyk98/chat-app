@@ -5,3 +5,10 @@
 .d-flex:not(.chat) {
   gap: 0.25rem;
 }
+
+.back {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+}
