@@ -4,6 +4,9 @@ import {
   Auth,
   signInWithPopup,
   signOut,
+  signInWithRedirect,
+  getRedirectResult,
+  GithubAuthProvider,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
@@ -15,7 +18,7 @@ export interface User {
 }
 
 export type Provider = {
-  [key: string]: GoogleAuthProvider;
+  [key: string]: GoogleAuthProvider | GithubAuthProvider;
 };
 
 export function chatGuard() {
@@ -32,6 +35,7 @@ export function chatGuard() {
 export class AuthService {
   private providers: Provider = {
     google: new GoogleAuthProvider(),
+    github: new GithubAuthProvider(),
   };
   private user!: User;
   constructor(private auth: Auth, private router: Router) {}
@@ -59,5 +63,21 @@ export class AuthService {
 
   getUser() {
     return this.user;
+  }
+
+  test(provider: string) {
+    signInWithRedirect(this.auth, this.providers[provider]);
+    getRedirectResult(this.auth)
+      .then((result) => {
+        const user = result!.user;
+        this.user = {
+          uid: user.uid,
+          email: user.email ?? '',
+          photoURL: user.photoURL ?? '',
+          displayName: user.displayName ?? '',
+        };
+        this.router.navigate(['list']);
+      })
+      .catch((error) => console.error(error.message));
   }
 }

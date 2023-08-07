@@ -12,4 +12,7 @@ export class LoginComponent {
   loginWithGoogle() {
     this.authService.loginWithProvider('google');
   }
+  loginWithGithub() {
+    this.authService.loginWithProvider('github');
+  }
 }

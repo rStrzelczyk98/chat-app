@@ -8,9 +8,16 @@ div {
 
 .icon {
   display: inline-block;
-  background-image: url("logo-google.png");
-  background-size: contain;
   width: 1.5rem;
   scale: 1.5;
   aspect-ratio: 1/1;
+}
+
+.google {
+  background-image: url("logo-google.png");
+  background-size: contain;
+}
+
+.btn {
+  width: min(12rem, 100%);
 }
