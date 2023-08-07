@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChatService, Message } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,8 @@ export class ChatComponent {
   constructor(
     private fb: FormBuilder,
     private chat: ChatService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.messageForm = this.fb.group({
       message: [null, Validators.required],
@@ -33,5 +35,9 @@ export class ChatComponent {
 
   quickMessage() {
     this.chat.sendMessage(this.auth.getUser(), '😎');
+  }
+
+  goToList() {
+    this.router.navigate(['list']);
   }
 }
