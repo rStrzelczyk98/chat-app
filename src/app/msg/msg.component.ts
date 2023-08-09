@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class MsgComponent implements OnChanges {
   @Input() url!: string;
+  @Input() imageUrl?: string;
   @Input() username!: string;
   @Input() time!: number;
   @Input() msg!: string;

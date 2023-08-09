@@ -16,6 +16,7 @@ export interface Message {
   username: string;
   userAvatar: string;
   time: number;
+  imageUrl?: string;
 }
 @Injectable({
   providedIn: 'root',
@@ -29,13 +30,18 @@ export class ChatService {
     });
   }
 
-  sendMessage({ displayName, photoURL, uid }: User, msg: string) {
+  sendMessage(
+    { displayName, photoURL, uid }: User,
+    msg: string,
+    imageUrl?: string
+  ) {
     const message: Message = {
       msg,
       userId: uid,
       username: displayName ?? 'guest',
       userAvatar: photoURL ?? '',
       time: Date.now(),
+      imageUrl: imageUrl,
     };
 
     this.getMessages()
@@ -60,7 +66,6 @@ export class ChatService {
         (chats) =>
           chats.find((chat: any) => chat['chatName'] === this.chatName).messages
       )
-      // map((messages) => messages.reverse())
     ) as Observable<Message[]>;
   }
 
