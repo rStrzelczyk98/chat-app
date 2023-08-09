@@ -5,6 +5,7 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } from '@angular/fire/storage';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
@@ -21,7 +22,8 @@ export class StorageService {
   constructor(private chat: ChatService) {}
 
   messageWithImage(file: any, user: User, msg: string) {
-    const storageRef = ref(this.storage, file.name);
+    const chatName = this.chat.getChatName();
+    const storageRef = ref(this.storage, `${chatName}/${file.name}`);
     uploadBytes(storageRef, file).then(() =>
       getDownloadURL(storageRef).then((url) =>
         this.chat.sendMessage(user, msg, url)

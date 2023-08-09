@@ -9,6 +9,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, map, take, tap } from 'rxjs';
 import { User } from './auth.service';
+import { StorageService } from './storage.service';
 
 export interface Message {
   msg: string;
@@ -33,7 +34,7 @@ export class ChatService {
   sendMessage(
     { displayName, photoURL, uid }: User,
     msg: string,
-    imageUrl?: string
+    imageUrl: string = ''
   ) {
     const message: Message = {
       msg,
@@ -41,7 +42,7 @@ export class ChatService {
       username: displayName ?? 'guest',
       userAvatar: photoURL ?? '',
       time: Date.now(),
-      imageUrl: imageUrl,
+      imageUrl,
     };
 
     this.getMessages()

@@ -15,7 +15,7 @@
     <div class="input-group">
       <input class="form-control bg-dark text-white-50" type="text" formControlName="message"
         placeholder="New message...">
-      <button class="btn btn-success bg-gradient" type="submit" [disabled]="messageForm.invalid"><i
+      <button class="btn btn-success bg-gradient" type="submit" [disabled]="!image &&messageForm.invalid"><i
           class="bi bi-send"></i></button>
     </div>
     <button class="btn btn-secondary bg-gradient rounded-2" type="button" (click)="quickMessage()">😎</button>

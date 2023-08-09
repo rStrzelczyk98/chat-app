@@ -15,7 +15,7 @@ export class ChatComponent {
   messageForm: FormGroup;
   messages$: Observable<Message[]>;
   chatName!: string;
-  private image!: null | File;
+  image!: null | File;
   constructor(
     private fb: FormBuilder,
     private chat: ChatService,
@@ -35,7 +35,6 @@ export class ChatComponent {
   }
 
   send() {
-    console.log(this.messageForm.value);
     const { message } = this.messageForm.value;
     if (this.image)
       this.storage.messageWithImage(this.image, this.auth.getUser(), message);
