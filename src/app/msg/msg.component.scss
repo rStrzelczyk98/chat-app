@@ -1,12 +1,12 @@
 .d-flex {
   max-width: 100vw;
   gap: 1rem;
-  img {
-    max-width: 3rem;
-    aspect-ratio: 1/1;
-  }
 }
-
+.avatar {
+  width: 2.5rem;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+}
 .user {
   border-radius: 0.5rem;
   border-bottom-right-radius: 0;

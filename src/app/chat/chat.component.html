@@ -5,13 +5,22 @@
   </div>
   <div class="flex-grow-1 overflow-y-auto overflow-x-hidden p-1" #chat [scrollTop]="chat.scrollHeight">
     <app-msg *ngFor="let message of messages$ | async" [url]="message.userAvatar" [username]="message.username"
-      [msg]="message.msg" [time]="message.time" [id]="message.userId"></app-msg>
+      [msg]="message.msg" [time]="message.time" [id]="message.userId"
+      [imageUrl]="message.imageUrl ?? undefined"></app-msg>
   </div>
   <form class="d-flex p-1" [formGroup]="messageForm" (ngSubmit)="send()">
+    <div class="position-relative d-flex align-items-stretch">
+      <label for="add-image"
+        class="file d-flex justify-content-center align-items-center text-white-50 bg-transparent"><i
+          class="bi bi-images"></i></label>
+      <input id="add-image" class="d-none" type="file" accept=".png, .jpg, .jpeg" (change)="getImage($event)">
+      <i class="image-selected bi bi-check bg-success bg-gradient text-white rounded-circle"
+        [ngClass]="image ? '' : 'd-none'"></i>
+    </div>
     <div class="input-group">
       <input class="form-control bg-dark text-white-50" type="text" formControlName="message"
         placeholder="New message...">
-      <button class="btn btn-success bg-gradient" type="submit" [disabled]="messageForm.invalid"><i
+      <button class="btn btn-success bg-gradient" type="submit" [disabled]="!image &&messageForm.invalid"><i
           class="bi bi-send"></i></button>
     </div>
     <button class="btn btn-secondary bg-gradient rounded-2" type="button" (click)="quickMessage()">😎</button>

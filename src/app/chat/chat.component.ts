@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChatService, Message } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,11 +15,13 @@ export class ChatComponent {
   messageForm: FormGroup;
   messages$: Observable<Message[]>;
   chatName!: string;
+  image!: null | File;
   constructor(
     private fb: FormBuilder,
     private chat: ChatService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) {
     this.messageForm = this.fb.group({
       message: [null, Validators.required],
@@ -27,10 +30,20 @@ export class ChatComponent {
     this.chatName = this.chat.getChatName();
   }
 
+  getImage(event: any) {
+    this.image = <File>event.target.files[0];
+  }
+
   send() {
     const { message } = this.messageForm.value;
-    this.chat.sendMessage(this.auth.getUser(), message);
+    if (message === 'clear') {
+      this.storage.deleteImages();
+    }
+    if (this.image)
+      this.storage.messageWithImage(this.image, this.auth.getUser(), message);
+    else this.chat.sendMessage(this.auth.getUser(), message);
     this.messageForm.reset();
+    this.image = null;
   }
 
   quickMessage() {

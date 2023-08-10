@@ -1,10 +1,14 @@
 <div class="mb-2" (click)="toggleTime()">
   <div class="d-flex mb-1 justify-content-end" [ngClass]="user ? 'flex-row' : 'flex-row-reverse'">
     <div class="bg-secondary bg-gradient overflow-hidden" [ngClass]="user ? 'user' : 'guest'">
-      <p class="m-0 px-3 text-white" [ngClass]="user ? '' : 'bg-primary bg-gradient'">{{user ? '' : username}}</p>
-      <p class="m-0 p-3">{{msg}}</p>
+      <p class="m-0 px-3 text-white" [ngClass]="user ? 'd-none' : 'bg-primary bg-gradient'">{{user ? '' : username}}
+      </p>
+      <p *ngIf="msg" class="m-0 p-1 px-2">{{msg}}</p>
+      <div [ngClass]="msg ? 'p-1 pt-0' : ''" *ngIf="imageUrl">
+        <img class="img-fluid" [src]="imageUrl" alt="" [ngClass]="msg ? 'rounded-2' : ''">
+      </div>
     </div>
-    <img class="border border-2 border-primary"
+    <img class="avatar border border-2 border-primary overflow-hidden"
       [ngClass]="user ? 'hidden' : 'flex-grow-0 align-self-end rounded-circle'" src="{{url}}" alt="">
   </div>
   <p *ngIf="!hidden" class="text-white-50 m-0" [ngClass]="!user ? '' : 'text-end'">{{time | date: 'dd/MM, HH:mm' }}
