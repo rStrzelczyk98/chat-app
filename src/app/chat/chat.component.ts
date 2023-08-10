@@ -36,9 +36,6 @@ export class ChatComponent {
 
   send() {
     const { message } = this.messageForm.value;
-    if (message === 'clear') {
-      this.storage.deleteImages();
-    }
     if (this.image)
       this.storage.messageWithImage(this.image, this.auth.getUser(), message);
     else this.chat.sendMessage(this.auth.getUser(), message);

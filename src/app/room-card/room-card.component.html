@@ -1,4 +1,8 @@
 <div class="chat-card bg-secondary bg-gradient card p-1">
   <p class="text-uppercase fw-bold text-center">{{chatName}}</p>
-  <button class="btn btn-success bg-gradient text-uppercase" (click)="joinChat()">Join</button>
+  <div class="d-flex">
+    <button class="flex-grow-1 btn btn-success bg-gradient text-uppercase" (click)="joinChat()">Join</button>
+    <button class="flex-grow-1 btn btn-danger bg-gradient text-uppercase" *ngIf="(creatorId | async) === userId"
+      (click)="deleteChat()">delete</button>
+  </div>
 </div>

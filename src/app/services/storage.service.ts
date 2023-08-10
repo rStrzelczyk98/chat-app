@@ -33,9 +33,9 @@ export class StorageService {
     });
   }
 
-  deleteImages() {
+  deleteImages(chatName: string) {
     this.chat
-      .getImagesRef()
+      .getImagesRef(chatName)
       .pipe(
         tap((images) => {
           images.forEach((imageRef) => {
