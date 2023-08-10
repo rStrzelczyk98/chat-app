@@ -3,6 +3,7 @@ import {
   Firestore,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   setDoc,
   updateDoc,
@@ -47,16 +48,9 @@ export class ChatService {
     this.getMessages()
       .pipe(
         tap((messages) => {
-          if (message.msg === 'clear') {
-            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), {
-              messages: [],
-              images: [],
-            });
-          } else {
-            const arr = [...messages];
-            arr.push(message);
-            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { messages: arr });
-          }
+          const arr = [...messages];
+          arr.push(message);
+          updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { messages: arr });
         }),
         take(1)
       )
@@ -76,8 +70,12 @@ export class ChatService {
     updateDoc(doc(this.fs, `CHAT/${chatName}`), { messages: [] });
   }
 
-  createNewChat(name: string) {
-    setDoc(doc(this.fs, `CHAT/${name}`), { messages: [], images: [] });
+  createNewChat(name: string, creatorId: string) {
+    setDoc(doc(this.fs, `CHAT/${name}`), {
+      messages: [],
+      images: [],
+      creatorId,
+    });
   }
 
   setChatName(name: string) {
@@ -94,17 +92,17 @@ export class ChatService {
     );
   }
 
-  getImagesRef() {
+  getImagesRef(chatName: string) {
     return this.messages$.pipe(
       map(
         (chats) =>
-          chats.find((chat: any) => chat['chatName'] === this.chatName).images
+          chats.find((chat: any) => chat['chatName'] === chatName).images
       )
     ) as Observable<string[]>;
   }
 
   addImageRef(imageRef: string) {
-    this.getImagesRef()
+    this.getImagesRef(this.chatName)
       .pipe(
         tap((images) => {
           const arr = [...images];
@@ -114,5 +112,20 @@ export class ChatService {
         take(1)
       )
       .subscribe();
+  }
+
+  deleteChatRoom(chatName: string) {
+    deleteDoc(doc(this.fs, `CHAT/${chatName}`)).then(() =>
+      console.log(`[DELETED] ${chatName}`)
+    );
+  }
+
+  getCreatorId(chatName: string) {
+    return this.messages$.pipe(
+      map(
+        (chats) =>
+          chats.find((chat: any) => chat['chatName'] === chatName).creatorId
+      )
+    ) as Observable<string>;
   }
 }

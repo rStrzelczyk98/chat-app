@@ -26,7 +26,7 @@ export class ListComponent {
   createRoom() {
     const { roomName } = this.roomForm.value;
     this.show = false;
-    this.chatService.createNewChat(roomName);
+    this.chatService.createNewChat(roomName, this.as.getUser().uid);
     this.roomForm.reset();
   }
 
