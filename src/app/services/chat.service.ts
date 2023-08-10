@@ -9,7 +9,6 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, map, take, tap } from 'rxjs';
 import { User } from './auth.service';
-import { StorageService } from './storage.service';
 
 export interface Message {
   msg: string;
@@ -49,7 +48,10 @@ export class ChatService {
       .pipe(
         tap((messages) => {
           if (message.msg === 'clear') {
-            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { messages: [] });
+            updateDoc(doc(this.fs, `CHAT/${this.chatName}`), {
+              messages: [],
+              images: [],
+            });
           } else {
             const arr = [...messages];
             arr.push(message);
@@ -75,7 +77,7 @@ export class ChatService {
   }
 
   createNewChat(name: string) {
-    setDoc(doc(this.fs, `CHAT/${name}`), { messages: [] });
+    setDoc(doc(this.fs, `CHAT/${name}`), { messages: [], images: [] });
   }
 
   setChatName(name: string) {
@@ -90,5 +92,27 @@ export class ChatService {
     return this.messages$.pipe(
       map((chats) => chats.map((chat: any) => chat['chatName']))
     );
+  }
+
+  getImagesRef() {
+    return this.messages$.pipe(
+      map(
+        (chats) =>
+          chats.find((chat: any) => chat['chatName'] === this.chatName).images
+      )
+    ) as Observable<string[]>;
+  }
+
+  addImageRef(imageRef: string) {
+    this.getImagesRef()
+      .pipe(
+        tap((images) => {
+          const arr = [...images];
+          arr.push(this.chatName + '/' + imageRef);
+          updateDoc(doc(this.fs, `CHAT/${this.chatName}`), { images: arr });
+        }),
+        take(1)
+      )
+      .subscribe();
   }
 }

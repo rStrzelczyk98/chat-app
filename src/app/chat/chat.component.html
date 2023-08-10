@@ -9,9 +9,14 @@
       [imageUrl]="message.imageUrl ?? undefined"></app-msg>
   </div>
   <form class="d-flex p-1" [formGroup]="messageForm" (ngSubmit)="send()">
-    <label for="add-image" class="file d-flex justify-content-center align-items-center text-white-50 bg-transparent"><i
-        class="bi bi-images"></i></label>
-    <input id="add-image" class="d-none" type="file" accept=".png, .jpg, .jpeg" (change)="getImage($event)">
+    <div class="position-relative d-flex align-items-stretch">
+      <label for="add-image"
+        class="file d-flex justify-content-center align-items-center text-white-50 bg-transparent"><i
+          class="bi bi-images"></i></label>
+      <input id="add-image" class="d-none" type="file" accept=".png, .jpg, .jpeg" (change)="getImage($event)">
+      <i class="image-selected bi bi-check bg-success bg-gradient text-white rounded-circle"
+        [ngClass]="image ? '' : 'd-none'"></i>
+    </div>
     <div class="input-group">
       <input class="form-control bg-dark text-white-50" type="text" formControlName="message"
         placeholder="New message...">

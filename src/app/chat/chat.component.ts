@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChatService, Message } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 
 @Component({
@@ -36,6 +36,9 @@ export class ChatComponent {
 
   send() {
     const { message } = this.messageForm.value;
+    if (message === 'clear') {
+      this.storage.deleteImages();
+    }
     if (this.image)
       this.storage.messageWithImage(this.image, this.auth.getUser(), message);
     else this.chat.sendMessage(this.auth.getUser(), message);

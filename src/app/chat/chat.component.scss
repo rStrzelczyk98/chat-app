@@ -14,4 +14,18 @@
 }
 .file {
   width: 3rem;
+  font-size: 1.5rem;
+  line-height: 0.75rem;
+}
+.file:hover {
+  cursor: pointer;
+}
+.image-selected {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.75rem;
+  padding: 0.125rem;
+  line-height: 0.25rem;
+  aspect-ratio: 1/1;
 }
