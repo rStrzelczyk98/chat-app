@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChatService, Message } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { Event, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class ChatComponent {
   messageForm: FormGroup;
   messages$: Observable<Message[]>;
   chatName!: string;
+  copied: boolean = false;
   image!: null | File;
   constructor(
     private fb: FormBuilder,
@@ -49,5 +50,14 @@ export class ChatComponent {
 
   goToList() {
     this.router.navigate(['list']);
+  }
+
+  copyRoomLink() {
+    const room = this.router.createUrlTree([''], {
+      queryParams: { room: this.chatName },
+    });
+    const link = location.origin + this.router.serializeUrl(room);
+    navigator.clipboard.writeText(link).then(() => {});
+    this.copied = true;
   }
 }

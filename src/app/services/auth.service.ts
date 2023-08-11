@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 import {
   GoogleAuthProvider,
   Auth,
@@ -9,6 +9,7 @@ import {
   GithubAuthProvider,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { ChatService } from './chat.service';
 
 export interface User {
   uid: string;
@@ -38,9 +39,13 @@ export class AuthService {
     github: new GithubAuthProvider(),
   };
   private user!: User;
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private chatService: ChatService
+  ) {}
 
-  loginWithProvider(provider: string) {
+  loginWithProvider(provider: string, redirectTo: string) {
     signInWithPopup(this.auth, this.providers[provider])
       .then((result) => {
         const user = result.user;
@@ -50,7 +55,12 @@ export class AuthService {
           photoURL: user.photoURL ?? '',
           displayName: user.displayName ?? '',
         };
-        this.router.navigate(['list']);
+        if (redirectTo === 'list') {
+          this.router.navigate([redirectTo]);
+        } else {
+          this.chatService.setChatName(redirectTo);
+          this.router.navigate([`chat/${redirectTo}`]);
+        }
       })
       .catch((error) => console.error(error.message));
   }
