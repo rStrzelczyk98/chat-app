@@ -8,7 +8,11 @@ import { ListComponent } from './list/list.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'list', component: ListComponent, canActivate: [() => chatGuard()] },
-  { path: 'chat', component: ChatComponent, canActivate: [() => chatGuard()] },
+  {
+    path: 'chat/:chatName',
+    component: ChatComponent,
+    canActivate: [() => chatGuard()],
+  },
   { path: '**', component: LoginComponent },
 ];
 

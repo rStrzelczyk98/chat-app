@@ -31,7 +31,7 @@ export class RoomCardComponent implements AfterViewInit {
 
   joinChat() {
     this.chatService.setChatName(this.chatName);
-    this.router.navigate(['chat']);
+    this.router.navigate([`chat/${this.chatName}`]);
   }
 
   deleteChat() {
