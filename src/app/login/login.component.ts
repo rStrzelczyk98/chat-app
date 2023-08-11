@@ -22,7 +22,6 @@ export class LoginComponent {
   }
 
   loginWithGoogle() {
-    console.log(this.room);
     this.authService.loginWithProvider('google', this.room);
   }
   loginWithGithub() {

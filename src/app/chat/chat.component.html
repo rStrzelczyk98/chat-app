@@ -2,7 +2,8 @@
   <div class="position-relative bg-success bg-gradient p-2">
     <h1 class="text-center text-uppercase text-white m-0">{{chatName}}</h1>
     <button class="back btn btn-dark bg-gradient" (click)="goToList()"><i class="bi bi-arrow-left-short"></i></button>
-    <button class="invite btn btn-dark bg-gradient"><i class="bi bi-envelope" (click)="copyRoomLink()"></i></button>
+    <button class="invite btn btn-dark bg-gradient" [ngClass]="copied ? 'text-success' : ''"><i class="bi bi-envelope"
+        (click)="copyRoomLink()"></i></button>
   </div>
   <div class="flex-grow-1 overflow-y-auto overflow-x-hidden p-1" #chat [scrollTop]="chat.scrollHeight">
     <app-msg *ngFor="let message of messages$ | async" [url]="message.userAvatar" [username]="message.username"

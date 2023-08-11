@@ -15,6 +15,7 @@ export class ChatComponent {
   messageForm: FormGroup;
   messages$: Observable<Message[]>;
   chatName!: string;
+  copied: boolean = false;
   image!: null | File;
   constructor(
     private fb: FormBuilder,
@@ -56,6 +57,7 @@ export class ChatComponent {
       queryParams: { room: this.chatName },
     });
     const link = location.origin + this.router.serializeUrl(room);
-    navigator.clipboard.writeText(link).then(() => alert('Copied room link'));
+    navigator.clipboard.writeText(link).then(() => {});
+    this.copied = true;
   }
 }
