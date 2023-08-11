@@ -56,7 +56,6 @@ export class ChatComponent {
       queryParams: { room: this.chatName },
     });
     const link = location.origin + this.router.serializeUrl(room);
-    navigator.clipboard.writeText(link);
-    alert('Copied room link: ' + link);
+    navigator.clipboard.writeText(link).then(() => alert('Copied room link'));
   }
 }
